@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="hbc-master/hbc-core/src/main/java"/>
+	<classpathentry kind="src" path="hbc-master/hbc-core/src/test/java"/>
+	<classpathentry kind="src" path="hbc-master/hbc-example/src/main/java"/>
+	<classpathentry kind="src" path="hbc-master/hbc-twitter4j/src/main/java"/>
+	<classpathentry kind="src" path="hbc-master/hbc-twitter4j/src/test/java"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
