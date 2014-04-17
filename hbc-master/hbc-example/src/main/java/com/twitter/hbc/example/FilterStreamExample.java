@@ -27,11 +27,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class FilterStreamExample {
 
-  public void oauth(String consumerKey, String consumerSecret, String token, String secret) throws InterruptedException {
+  public static void oauth(String consumerKey, String consumerSecret, String token, String secret) throws InterruptedException {
     BlockingQueue<String> queue = new LinkedBlockingQueue<String>(10000);
     StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
     // add some track terms
-    endpoint.trackTerms(Lists.newArrayList("twitterapi", "#yolo"));
+    endpoint.trackTerms(Lists.newArrayList("twitterapi", "#gameofthrones"));
 
     Authentication auth = new OAuth1(consumerKey, consumerSecret, token, secret);
     // Authentication auth = new BasicAuth(username, password);

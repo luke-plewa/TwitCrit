@@ -25,6 +25,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.collect.Lists;
+import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
+
 public class SampleStreamExample {
 
   public static void oauth(String consumerKey, String consumerSecret, String token, String secret) throws InterruptedException {
@@ -33,8 +36,9 @@ public class SampleStreamExample {
 
     // Define our endpoint: By default, delimited=length is set (we need this for our processor)
     // and stall warnings are on.
-    StatusesSampleEndpoint endpoint = new StatusesSampleEndpoint();
-    endpoint.stallWarnings(false);
+    StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
+    endpoint.trackTerms(Lists.newArrayList("twitterapi", "#gameofthrones"));
+    //endpoint.stallWarnings(false);
 
     Authentication auth = new OAuth1(consumerKey, consumerSecret, token, secret);
     //Authentication auth = new com.twitter.hbc.httpclient.auth.BasicAuth(username, password);
@@ -74,7 +78,7 @@ public class SampleStreamExample {
 
   public static void main(String[] args) {
 	  try {
-	  SampleStreamExample.oauth(args[0], args[1], args[2], args[3]);
+	  FilterStreamExample.oauth(args[0], args[1], args[2], args[3]);
 	  } catch (InterruptedException e) {
 		  System.out.println(e);
 	  }
