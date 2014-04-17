@@ -1,13 +1,19 @@
-package edu.calpoly.twitcrit;
+import twitter4j.*;
 
 public class Tester {
-
-  private static String API_key = "jCtjk7mO08aMwcZ7bwnEYWnE6";
-  private static String API_secret  = "rkgJGMttVIbd8RF3AHaLl0rjTNt1PEjyyIN3L9kxf7oJeCdBh8";
-  private static String Access_token = "354589333-xJOBhoOyC64uMETx7s9L3mVu2KqSJEPgbThzfEVr";
-  private static String Access_token_secret = "tpOrloa3BqZNS3NR722lCScfI0ZHkUmqs2xi2NhuROWym";
-
-	public static int main() {
-    return 0;
-  }
+   public static void main(String[] args) {
+      try {
+         // The factory instance is re-useable and thread safe.
+         Twitter twitter = TwitterFactory.getSingleton();
+         Query query = new Query("#yolo");
+         QueryResult result = twitter.search(query);
+         for (Status status : result.getTweets()) {
+            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+         }
+      }
+      catch (TwitterException e) {
+         e.printStackTrace();
+         System.exit(0);
+      }
+   }
 }
