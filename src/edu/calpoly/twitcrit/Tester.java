@@ -5,15 +5,19 @@ public class Tester {
    private static final String[] BAD_KEYWORDS = {"bad", "boring", "horrible", "suck", "awful", "terrible", "shit", "garbage"};
    private static final int BASE_SCORE = 5;
    private static final int MAX_SCORE = 10;
+   private static final int PAGES_TO_SEARCH = 100;
+   private static final int TWEETS_PER_PAGE = 100;
+   private static final String SEARCH_KEYWORD = "#CaptainAmericaTheWinterSoldier";
 
-   public static Query makeQuery() {
-      Query query = new Query("#CaptainAmericaTheWinterSoldier");
+   public static Query makeQuery(String keyword) {
+      Query query = new Query(keyword);
       query.setLang("en");
-      query.count(100);
+      query.count(TWEETS_PER_PAGE);
       return query;
    }
 
-   public static int parseTweet(Status status) {
+   /* given the text of a tweet, return the score */
+   public static int scoreTweet(Status status) {
       int score = 5;
       String text = status.getText();
 
@@ -44,12 +48,12 @@ public class Tester {
          int index = 0;
          // The factory instance is re-useable and thread safe.
          Twitter twitter = TwitterFactory.getSingleton();
-         Query query = makeQuery();
+         Query query = makeQuery(SEARCH_KEYWORD);
          QueryResult result = twitter.search(query);
 
-         for(int i = 0; i < 100; i++) {
+         for(int i = 0; i < PAGES_TO_SEARCH; i++) {
             for (Status status : result.getTweets()) {
-               score += parseTweet(status);
+               score += scoreTweet(status);
                // System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
                if (score != 0) {
                   index++;
