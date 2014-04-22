@@ -2,7 +2,7 @@ import twitter4j.*;
 
 public class Tester {
    private static final String[] GOOD_KEYWORDS = {"good", "epic", "brilliant", "better", "fabulous", "love", "enjoy", "incredible"};
-   private static final String[] BAD_KEYWORDS = {"bad", "boring", };
+   private static final String[] BAD_KEYWORDS = {"bad", "boring", "horrible", "suck", "awful", "terrible", "shit", "garbage"};
    private static final int BASE_SCORE = 5;
    private static final int MAX_SCORE = 10;
 
@@ -14,7 +14,7 @@ public class Tester {
    }
 
    public static int parseTweet(Status status) {
-      int score = 0;
+      int score = 5;
       String text = status.getText();
 
       for (String str : GOOD_KEYWORDS) {
@@ -29,6 +29,12 @@ public class Tester {
          }
       }
 
+      if (score > 5) {
+         score = 5;
+      } else if (score < -5) {
+         score = -5;
+      }
+
       return score;
    }
 
@@ -41,10 +47,10 @@ public class Tester {
          Query query = makeQuery();
          QueryResult result = twitter.search(query);
 
-         for(int i = 0; i < 5; i++) {
+         for(int i = 0; i < 100; i++) {
             for (Status status : result.getTweets()) {
                score += parseTweet(status);
-               //System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+               // System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
                if (score != 0) {
                   index++;
                }
