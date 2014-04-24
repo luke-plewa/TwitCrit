@@ -43,7 +43,6 @@ public class Tester {
          }
          index++;
       }
-      System.out.println(score + " " + count + " " + score/count);
       if (count == 0) {
          return 0;
       }
@@ -75,6 +74,7 @@ public class Tester {
                result = twitter.search(query);
             }
          }
+         System.out.println("Movie hashtag: " + SEARCH_KEYWORD);
          System.out.println("Score: " + (score / index) + " out of " + MAX_SCORE + ", based on " + index + " reviews.");
       }
       catch (TwitterException e) {
