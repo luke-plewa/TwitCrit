@@ -7,17 +7,17 @@ public class Tester {
    private static final int TWEETS_PER_PAGE = 100;
    private static final String SEARCH_KEYWORD = "#CaptainAmericaTheWinterSoldier";
    private static final String[][] KEYWORDS = {
-         {"worst", "terrible"},
-         {"garbage", "miserable"},
-         {"suck", "crap"},
-         {"bad"},
+         {"worst", "terrible", "horrible"},
+         {"garbage", "miserable", "embarrassing"},
+         {"suck", "crap", "poop", "awful", "rotten"},
+         {"bad", "poor", "not good"},
          {"boring", "unfunny"},
          {"okay", "decent"},
-         {"good", "alright"},
+         {"good", "alright", "enjoy"},
          {"great", "better", "well done"},
-         {"love", "marvelous", "fabulous", "legit"},
+         {"love", "marvelous", "fabulous", "legit", "fresh"},
          {"awesome", "excellent", "amazing", "must see"},
-         {"best", "top"}
+         {"best", "top", "incredible", "Oscar"}
     };
 
    public static Query makeQuery(String keyword) {
@@ -78,7 +78,9 @@ public class Tester {
          System.out.println("Score: " + (score / index) + " out of " + MAX_SCORE + ", based on " + index + " reviews.");
       }
       catch (TwitterException e) {
-         e.printStackTrace();
+         RateLimitStatus r = e.getRateLimitStatus();
+         System.out.println("" + e.getMessage());
+         System.out.println("Please wait " + r.getSecondsUntilReset() + " seconds before searching again.");
          System.exit(0);
       }
    }
