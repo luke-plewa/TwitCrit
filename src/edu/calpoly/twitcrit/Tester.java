@@ -5,7 +5,6 @@ public class Tester {
    private static final int MAX_SCORE = 10;
    private static final int PAGES_TO_SEARCH = 100;
    private static final int TWEETS_PER_PAGE = 100;
-   private static final String SEARCH_KEYWORD = "#CaptainAmericaTheWinterSoldier";
    private static final String[][] KEYWORDS = {
          {"worst", "terrible"},
          {"garbage", "miserable"},
@@ -52,12 +51,13 @@ public class Tester {
 
    public static void main(String[] args) {
       try {
+         System.out.println("Generating movie score for movie with hashtag: " + args[0]);
          double score = 0;
          double new_score = 0;
          double index = 0;
          // The factory instance is re-useable and thread safe.
          Twitter twitter = TwitterFactory.getSingleton();
-         Query query = makeQuery(SEARCH_KEYWORD);
+         Query query = makeQuery(args[0]);
          QueryResult result = twitter.search(query);
 
          for(int i = 0; i < PAGES_TO_SEARCH; i++) {
@@ -74,7 +74,7 @@ public class Tester {
                result = twitter.search(query);
             }
          }
-         System.out.println("Movie hashtag: " + SEARCH_KEYWORD);
+         System.out.println("Movie hashtag: " + args[0]);
          System.out.println("Score: " + (score / index) + " out of " + MAX_SCORE + ", based on " + index + " reviews.");
       }
       catch (TwitterException e) {
