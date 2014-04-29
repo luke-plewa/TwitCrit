@@ -7,13 +7,13 @@ public class Tester {
    private static final int TWEETS_PER_PAGE = 100;
    private static final String[][] KEYWORDS = {
          {"worst", "terrible", "horrible"},
-         {"garbage", "miserable", "embarrassing"},
+         {"garbage", "miserable", "embarrassing", "painful"},
          {"suck", "crap", "poop", "awful", "rotten"},
          {"bad", "poor", "not good"},
          {"boring", "unfunny"},
          {"okay", "decent"},
          {"good", "alright", "enjoy"},
-         {"great", "better", "well done"},
+         {"great", "better", "well done", "excite"},
          {"love", "marvelous", "fabulous", "legit", "fresh"},
          {"awesome", "excellent", "amazing", "must see"},
          {"best", "top", "incredible", "Oscar"}
@@ -49,7 +49,7 @@ public class Tester {
       return score / count;
    }
 
-   public static void main(String[] args) {
+   public static void printScore(String hashtag) {
       try {
          System.out.println("Generating movie score for movie with hashtag: " + args[0]);
          double score = 0;
@@ -57,10 +57,10 @@ public class Tester {
          double index = 0;
          // The factory instance is re-useable and thread safe.
          Twitter twitter = TwitterFactory.getSingleton();
-         Query query = makeQuery(args[0]);
+         Query query = makeQuery(hashtag);
          QueryResult result = twitter.search(query);
 
-         for(int i = 0; i < PAGES_TO_SEARCH; i++) {
+         for (int i = 0; i < PAGES_TO_SEARCH; i++) {
             for (Status status : result.getTweets()) {
                new_score = scoreTweet(status);
                score += scoreTweet(status);
@@ -83,5 +83,9 @@ public class Tester {
          System.out.println("Please wait " + r.getSecondsUntilReset() + " seconds before searching again.");
          System.exit(0);
       }
+   }
+
+   public static void main(String[] args) {
+      printScore(args[0]);
    }
 }
