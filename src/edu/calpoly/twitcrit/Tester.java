@@ -1,4 +1,5 @@
 import twitter4j.*;
+import java.util.*;
 
 public class Tester {
    private static final int BASE_SCORE = 5;
@@ -18,6 +19,9 @@ public class Tester {
          {"awesome", "excellent", "amazing", "must see"},
          {"best", "top", "incredible", "Oscar"}
     };
+
+    private static HashMap<String, Double> movie_scores;
+    private static HashMap<String, Integer> num_reviews;
 
    public static Query makeQuery(String keyword) {
       Query query = new Query(keyword);
@@ -51,7 +55,7 @@ public class Tester {
 
    public static void printScore(String hashtag) {
       try {
-         System.out.println("Generating movie score for movie with hashtag: " + args[0]);
+         System.out.println("Generating movie score for movie with hashtag: " + hashtag);
          double score = 0;
          double new_score = 0;
          double index = 0;
@@ -74,8 +78,12 @@ public class Tester {
                result = twitter.search(query);
             }
          }
-         System.out.println("Movie hashtag: " + args[0]);
-         System.out.println("Score: " + (score / index) + " out of " + MAX_SCORE + ", based on " + index + " reviews.");
+
+         num_reviews.put(hashtag, new Integer((int) index));
+         movie_scores.put(hashtag, new Double(score / index));
+         System.out.println("Movie hashtag: " + hashtag);
+         System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
+            + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.");
       }
       catch (TwitterException e) {
          RateLimitStatus r = e.getRateLimitStatus();
@@ -86,6 +94,8 @@ public class Tester {
    }
 
    public static void main(String[] args) {
+      movie_scores = new HashMap<String, Double>();
+      num_reviews = new HashMap<String, Integer>();
       printScore(args[0]);
    }
 }
