@@ -1,3 +1,5 @@
+package edu.calpoly.twitcrit;
+
 import twitter4j.*;
 import java.util.*;
 

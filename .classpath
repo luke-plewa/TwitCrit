@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="hbc-master/hbc-twitter4j/src/test/java"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Bhargav/Documents/School/Spring 2014/CPE 481/lib/twitter4j-4.0.1/lib/twitter4j-core-4.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
