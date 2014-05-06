@@ -14,16 +14,17 @@ public class Tester {
          {"suck", "crap", "poop", "awful", "rotten"},
          {"bad", "poor", "not good"},
          {"boring", "unfunny"},
-         {"okay", "decent"},
+         {"okay", "decent", "not bad"},
          {"good", "alright", "enjoy"},
          {"great", "better", "well done", "excite"},
          {"love", "marvelous", "fabulous", "legit", "fresh"},
          {"awesome", "excellent", "amazing", "must see"},
-         {"best", "top", "incredible", "Oscar"}
+         {"best", "top", "incredible", "Oscar"}	//removed "top", because it was including tweets with "stop"
     };
 
     private static HashMap<String, Double> movie_scores;
     private static HashMap<String, Integer> num_reviews;
+    private static HashMap<String, Integer> keywords_seen;
 
    public static Query makeQuery(String keyword) {
       Query query = new Query(keyword);
@@ -44,6 +45,15 @@ public class Tester {
             if (text.contains(word)) {
                score += index;
                count++;
+               
+               //keep track of which keywords have been seen the most
+               Integer seen = keywords_seen.get(word);
+               if (seen != null) {
+                  keywords_seen.put(word, seen + 1);
+               }
+               else {
+                  keywords_seen.put(word, 1);
+               }
             }
          }
          index++;
@@ -86,6 +96,21 @@ public class Tester {
          System.out.println("Movie hashtag: " + hashtag);
          System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
             + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.");
+            
+         //Prints out the keywords used.
+         String mostSeen = null;
+         Integer maxValue = 0;
+         for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
+            String keyword = entry.getKey();
+            Integer value = entry.getValue();
+            
+            System.out.println("Keyword: " + keyword + "	Count: " + value);
+            if (value > maxValue) {
+               maxValue = value;
+               mostSeen = keyword;
+            }   
+         }
+         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.");
       }
       catch (TwitterException e) {
          RateLimitStatus r = e.getRateLimitStatus();
@@ -98,6 +123,7 @@ public class Tester {
    public static void main(String[] args) {
       movie_scores = new HashMap<String, Double>();
       num_reviews = new HashMap<String, Integer>();
+      keywords_seen = new HashMap<String, Integer>();
       printScore(args[0]);
    }
 }
