@@ -22,9 +22,25 @@ public class Tester {
          {"best", "top", "incredible", "Oscar"}	//removed "top", because it was including tweets with "stop"
     };
 
-    private static HashMap<String, Double> movie_scores;
+    /*private static HashMap<String, Double> movie_scores;
     private static HashMap<String, Integer> num_reviews;
     private static HashMap<String, Integer> keywords_seen;
+    
+    private Tester(){
+  	  movie_scores = new HashMap<String, Double>();
+      num_reviews = new HashMap<String, Integer>();
+      keywords_seen = new HashMap<String, Integer>();
+    }
+    
+    public static void displayScore(String hashtag){
+    	new Tester().printScore(hashtag);
+    }*/
+   
+    //use this if we go with predefining our statics, otherwise use the commented out
+   	//part that's above this for static factory instancing
+    private static HashMap<String, Double> movie_scores = new HashMap<String, Double>();
+    private static HashMap<String, Integer> num_reviews = new HashMap<String, Integer>();
+    private static HashMap<String, Integer> keywords_seen = new HashMap<String, Integer>();
 
    public static Query makeQuery(String keyword) {
       Query query = new Query(keyword);
@@ -118,12 +134,5 @@ public class Tester {
          System.out.println("Please wait " + r.getSecondsUntilReset() + " seconds before searching again.");
          System.exit(0);
       }
-   }
-
-   public static void main(String[] args) {
-      movie_scores = new HashMap<String, Double>();
-      num_reviews = new HashMap<String, Integer>();
-      keywords_seen = new HashMap<String, Integer>();
-      printScore(args[0]);
    }
 }
