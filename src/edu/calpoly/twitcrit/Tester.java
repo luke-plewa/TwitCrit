@@ -84,6 +84,14 @@ public class Tester {
 
       return score / count;
    }
+   
+   public double getScore(String hashtag) {
+      return movie_scores.get(hashtag);
+   }
+   
+   public double getNumReviews(String hashtag) {
+      return num_reviews.get(hashtag);
+   }
 
    public static void printScore(String hashtag) {
       try {
@@ -116,7 +124,13 @@ public class Tester {
          System.out.println("Movie hashtag: " + hashtag);
          System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
             + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.");
-            
+         
+         String movieTag = "Movie hashtag: " + hashtag + "\n"
+                           + "Score: " + movie_scores.get(hashtag) + " out of "
+                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
+         
+         MainWindow.getTopDisplay().setTextArea(movieTag);
+         
          //Prints out the keywords used.
          String mostSeen = null;
          Integer maxValue = 0;
@@ -128,9 +142,10 @@ public class Tester {
             if (value > maxValue) {
                maxValue = value;
                mostSeen = keyword;
-            }   
+            }
          }
          System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.");
+         
       }
       catch (TwitterException e) {
          RateLimitStatus r = e.getRateLimitStatus();

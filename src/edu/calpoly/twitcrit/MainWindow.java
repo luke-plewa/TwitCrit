@@ -9,7 +9,14 @@ public class MainWindow {
 
 	//temporary public var to use with search bar
 	public static String commandLine;
-	
+   private static ResultDisplay topDisplay;
+   private static ResultDisplay middleDisplay;
+   private static ResultDisplay bottomDisplay;
+   
+   public static ResultDisplay getTopDisplay() {
+      return topDisplay;
+   }
+   
 	public static void main(String[] args) {
       if (args.length > 0)
          commandLine = args[0];
@@ -24,9 +31,9 @@ public class MainWindow {
 		JPanel searchBar = new SearchBar();
 		
 		//create result display panels
-		JPanel topDisplay = new ResultDisplay();
-		JPanel middleDisplay = new ResultDisplay();
-		JPanel bottomDisplay = new ResultDisplay();
+		topDisplay = new ResultDisplay();
+      middleDisplay = new ResultDisplay();
+      bottomDisplay = new ResultDisplay();
 		
 		//add search bar to frame
 		mainFrame.add(Box.createRigidArea(new Dimension(0,20)));
