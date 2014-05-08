@@ -52,10 +52,8 @@ public class SearchBar extends JPanel implements FocusListener, ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//FOR NOW ALWAYS SEARCHES CAPTAIN AMERICA
-		//Tester.printScore(Tester.movieToHashtag(search.getText()));
-		
-		Tester.printScore(MainWindow.commandLine);
+		String text = searchField.getText();
+		Tester.printScore(text);
 	}
 
 }

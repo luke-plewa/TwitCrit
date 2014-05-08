@@ -11,14 +11,16 @@ public class MainWindow {
 	public static String commandLine;
 	
 	public static void main(String[] args) {
+      if (args.length > 0)
+         commandLine = args[0];
+      
 		//create the main frame and set details
 		JFrame mainFrame = new JFrame("TwitCrit");
 		mainFrame.setLayout(new BoxLayout(mainFrame.getContentPane(),BoxLayout.PAGE_AXIS));
 		mainFrame.setPreferredSize(new Dimension(500,500));
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		//panel to hold the search bar and search button
-		commandLine = args[0];
+      
+      //panel to hold the search bar and search button
 		JPanel searchBar = new SearchBar();
 		
 		//create result display panels
