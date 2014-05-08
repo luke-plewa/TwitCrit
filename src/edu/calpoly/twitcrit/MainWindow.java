@@ -21,8 +21,23 @@ public class MainWindow {
 		commandLine = args[0];
 		JPanel searchBar = new SearchBar();
 		
+		//create result display panels
+		JPanel topDisplay = new ResultDisplay();
+		JPanel middleDisplay = new ResultDisplay();
+		JPanel bottomDisplay = new ResultDisplay();
+		
+		//add search bar to frame
 		mainFrame.add(Box.createRigidArea(new Dimension(0,20)));
 		mainFrame.add(searchBar);
+		mainFrame.add(Box.createRigidArea(new Dimension(0,20)));
+		
+		//add result displays to frame
+		mainFrame.add(topDisplay);
+		mainFrame.add(Box.createRigidArea(new Dimension(0,20)));
+		mainFrame.add(middleDisplay);
+		mainFrame.add(Box.createRigidArea(new Dimension(0,20)));
+		mainFrame.add(bottomDisplay);
+		mainFrame.add(Box.createRigidArea(new Dimension(0,20)));
 		
 		//display the frame
 		mainFrame.pack();
