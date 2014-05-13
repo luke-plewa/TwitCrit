@@ -2,9 +2,10 @@ package edu.calpoly.twitcrit;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
-public class SearchBar extends JPanel implements FocusListener, ActionListener {
+public class SearchBar extends JPanel implements FocusListener, ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	private static final String BLANK_SEARCH_TEXT = "Enter a movie title...";
 	
@@ -26,6 +27,7 @@ public class SearchBar extends JPanel implements FocusListener, ActionListener {
 		searchFont = searchField.getFont();
 		currentSearchText = "";
 		searchField.addFocusListener(this);
+		searchField.addActionListener(this);
 		add(searchField,"Center");
 		
 		//set button properties
@@ -51,9 +53,31 @@ public class SearchBar extends JPanel implements FocusListener, ActionListener {
 		else searchField.setText(currentSearchText);
 	}
 	
-	public void actionPerformed(ActionEvent e) {
+	private void runSearch(){
 		String text = searchField.getText();
 		Tester.printScore(text);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		runSearch();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_ENTER){
+			runSearch();
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 
 }

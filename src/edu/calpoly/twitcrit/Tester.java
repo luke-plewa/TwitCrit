@@ -129,7 +129,8 @@ public class Tester {
                            + "Score: " + movie_scores.get(hashtag) + " out of "
                            + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
          
-         MainWindow.getTopDisplay().setTextArea(movieTag);
+         //MainWindow.getTopDisplay().setTextArea(movieTag);
+         MainWindow.updateSearchHistory(movieTag);
          
          //Prints out the keywords used.
          String mostSeen = null;

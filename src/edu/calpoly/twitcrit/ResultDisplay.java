@@ -16,4 +16,8 @@ public class ResultDisplay extends JPanel {
    public void setTextArea(String text) {
       textArea.setText(text);
    }
+   
+   public String getTextArea(){
+	   return textArea.getText();
+   }
 }
