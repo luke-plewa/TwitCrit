@@ -29,6 +29,7 @@ public class ValueTester {
   }
 
   public static void checkMetaCriticScores() {
+    System.out. println("Comparing against metacritic scores...");
     for (int i = 0; i < movieHashtags.length; i++) {
       String movie = movieHashtags[i];
       double score = Tester.searchForScore(movie);
@@ -41,6 +42,7 @@ public class ValueTester {
   }
 
   public static void checkRottenScores() {
+    System.out. println("Comparing against rotten tomatoes scores...");
     for (int i = 0; i < movieHashtags.length; i++) {
       String movie = movieHashtags[i];
       double score = Tester.searchForScore(movie);
