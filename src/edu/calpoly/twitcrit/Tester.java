@@ -6,7 +6,7 @@ import java.util.*;
 public class Tester {
    private static final int BASE_SCORE = 5;
    private static final int MAX_SCORE = 10;
-   private static final int PAGES_TO_SEARCH = 100;
+   private static final int PAGES_TO_SEARCH = 90;
    private static final int TWEETS_PER_PAGE = 100;
    private static final String[][] KEYWORDS = {
          {"worst", "terrible", "horrible"},
@@ -165,6 +165,9 @@ public class Tester {
             if (query != null) {
                result = twitter.search(query);
             }
+            else {
+               break;
+            }
          }
 
          num_reviews.put(hashtag, new Integer((int) index));
@@ -195,7 +198,7 @@ public class Tester {
 	               mostSeen = keyword;
 	            }
 	         }
-	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.");
+	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
 	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
          else {
