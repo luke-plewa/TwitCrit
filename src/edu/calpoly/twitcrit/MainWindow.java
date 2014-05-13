@@ -10,18 +10,6 @@ public class MainWindow extends JFrame {
    private static ResultDisplay middleDisplay;
    private static ResultDisplay bottomDisplay;
    
-   public static ResultDisplay getTopDisplay() {
-      return topDisplay;
-   }
-   
-   public static ResultDisplay getMiddleDisplay() {
-      return middleDisplay;
-   }
-   
-   public static ResultDisplay getBottomDisplay() {
-      return bottomDisplay;
-   }
-   
    public static void updateSearchHistory(String result){
 	   bottomDisplay.setTextArea(middleDisplay.getTextArea());
 	   middleDisplay.setTextArea(topDisplay.getTextArea());

@@ -151,7 +151,7 @@ public class Tester {
 	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
          else {
-        	 System.out.println("There were no search results for this movie.");
+        	 MessageDisplayPane.displayMessage("There were no search results for this movie.");
          }
          
       }
