@@ -25,23 +25,23 @@ public class Tester {
     /*private static HashMap<String, Double> movie_scores;
     private static HashMap<String, Integer> num_reviews;
     private static HashMap<String, Integer> keywords_seen;
-    
+
     private Tester(){
   	  movie_scores = new HashMap<String, Double>();
       num_reviews = new HashMap<String, Integer>();
       keywords_seen = new HashMap<String, Integer>();
     }
-    
+
     public static void displayScore(String hashtag){
     	new Tester().printScore(hashtag);
     }*/
-   
+
     //use this if we go with predefining our statics, otherwise use the commented out
    	//part that's above this for static factory instancing
     private static HashMap<String, Double> movie_scores = new HashMap<String, Double>();
     private static HashMap<String, Integer> num_reviews = new HashMap<String, Integer>();
     private static HashMap<String, Integer> keywords_seen = new HashMap<String, Integer>();
-    
+
     public static String movieToHashtag(String movie){
     	return "#CaptainAmerica";
     }
@@ -65,7 +65,7 @@ public class Tester {
             if (text.contains(word)) {
                score += index;
                count++;
-               
+
                //keep track of which keywords have been seen the most
                Integer seen = keywords_seen.get(word);
                if (seen != null) {
@@ -84,13 +84,61 @@ public class Tester {
 
       return score / count;
    }
-   
+
    public double getScore(String hashtag) {
       return movie_scores.get(hashtag);
    }
-   
+
    public double getNumReviews(String hashtag) {
       return num_reviews.get(hashtag);
+   }
+
+   public static double searchForScore(String hashtag) {
+      try {
+         double score = 0;
+         double new_score = 0;
+         double index = 0;
+         // The factory instance is re-useable and thread safe.
+         Twitter twitter = TwitterFactory.getSingleton();
+         Query query = makeQuery(hashtag);
+         QueryResult result = twitter.search(query);
+
+         for (int i = 0; i < PAGES_TO_SEARCH; i++) {
+            for (Status status : result.getTweets()) {
+               new_score = scoreTweet(status);
+               score += scoreTweet(status);
+               // System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+               if (new_score != 0) {
+                  index++;
+               }
+            }
+            query = result.nextQuery();
+            if (query != null) {
+               result = twitter.search(query);
+            } else {
+              break;
+            }
+         }
+
+         num_reviews.put(hashtag, new Integer((int) index));
+         movie_scores.put(hashtag, new Double(score / index));
+         int checkValidReturn = num_reviews.get(hashtag);
+         if(checkValidReturn > 0){
+          return movie_scores.get(hashtag);
+         }
+         else {
+           MessageDisplayPane.displayMessage("There were no search results for this movie.");
+           return -1;
+         }
+
+      }
+      catch (TwitterException e) {
+         RateLimitStatus r = e.getRateLimitStatus();
+         System.out.println("" + e.getMessage());
+         System.out.println("Please wait " + r.getSecondsUntilReset() + " seconds before searching again.");
+         System.exit(0);
+      }
+      return -1;
    }
 
    public static void printScore(String hashtag) {
@@ -126,21 +174,21 @@ public class Tester {
          if(checkValidReturn > 0){
 	         System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
 	            + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
-	         
+
 	         String movieTag = "Movie hashtag: " + hashtag + "\n"
 	                           + "Score: " + movie_scores.get(hashtag) + " out of "
 	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
-	         
+
 	         //update the panels with the new results
 	         MainWindow.updateSearchHistory(movieTag);
-	         
+
 	         //Prints out the keywords used.
 	         String mostSeen = null;
 	         Integer maxValue = 0;
 	         for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
 	            String keyword = entry.getKey();
 	            Integer value = entry.getValue();
-	            
+
 	            System.out.println("Keyword: " + keyword + "	Count: " + value);
 	            if (value > maxValue) {
 	               maxValue = value;
@@ -153,7 +201,7 @@ public class Tester {
          else {
         	 MessageDisplayPane.displayMessage("There were no search results for this movie.");
          }
-         
+
       }
       catch (TwitterException e) {
          RateLimitStatus r = e.getRateLimitStatus();
