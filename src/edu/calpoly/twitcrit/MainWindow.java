@@ -24,9 +24,7 @@ public class MainWindow extends JFrame {
    
    public static void updateSearchHistory(String result){
 	   bottomDisplay.setTextArea(middleDisplay.getTextArea());
-	   System.out.println("bot text " + bottomDisplay.getTextArea());
 	   middleDisplay.setTextArea(topDisplay.getTextArea());
-	   System.out.println("mid text" + middleDisplay.getTextArea()); 
 	   topDisplay.setTextArea(result);
    }
    

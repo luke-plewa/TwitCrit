@@ -122,31 +122,37 @@ public class Tester {
          num_reviews.put(hashtag, new Integer((int) index));
          movie_scores.put(hashtag, new Double(score / index));
          System.out.println("Movie hashtag: " + hashtag);
-         System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
-            + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.");
-         
-         String movieTag = "Movie hashtag: " + hashtag + "\n"
-                           + "Score: " + movie_scores.get(hashtag) + " out of "
-                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
-         
-         //MainWindow.getTopDisplay().setTextArea(movieTag);
-         //MainWindow.getBottomDisplay().setTextArea(movieTag);
-         MainWindow.updateSearchHistory(movieTag);
-         
-         //Prints out the keywords used.
-         String mostSeen = null;
-         Integer maxValue = 0;
-         for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
-            String keyword = entry.getKey();
-            Integer value = entry.getValue();
-            
-            System.out.println("Keyword: " + keyword + "	Count: " + value);
-            if (value > maxValue) {
-               maxValue = value;
-               mostSeen = keyword;
-            }
+         int checkValidReturn = num_reviews.get(hashtag);
+         if(checkValidReturn > 0){
+	         System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
+	            + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
+	         
+	         String movieTag = "Movie hashtag: " + hashtag + "\n"
+	                           + "Score: " + movie_scores.get(hashtag) + " out of "
+	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
+	         
+	         //update the panels with the new results
+	         MainWindow.updateSearchHistory(movieTag);
+	         
+	         //Prints out the keywords used.
+	         String mostSeen = null;
+	         Integer maxValue = 0;
+	         for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
+	            String keyword = entry.getKey();
+	            Integer value = entry.getValue();
+	            
+	            System.out.println("Keyword: " + keyword + "	Count: " + value);
+	            if (value > maxValue) {
+	               maxValue = value;
+	               mostSeen = keyword;
+	            }
+	         }
+	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.");
+	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
-         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.");
+         else {
+        	 System.out.println("There were no search results for this movie.");
+         }
          
       }
       catch (TwitterException e) {
