@@ -130,6 +130,7 @@ public class Tester {
                            + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
          
          //MainWindow.getTopDisplay().setTextArea(movieTag);
+         //MainWindow.getBottomDisplay().setTextArea(movieTag);
          MainWindow.updateSearchHistory(movieTag);
          
          //Prints out the keywords used.

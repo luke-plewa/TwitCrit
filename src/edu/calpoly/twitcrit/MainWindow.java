@@ -6,8 +6,6 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MainWindow extends JFrame {
-
-	//temporary public var to use with search bar
    private static ResultDisplay topDisplay;
    private static ResultDisplay middleDisplay;
    private static ResultDisplay bottomDisplay;
@@ -26,9 +24,9 @@ public class MainWindow extends JFrame {
    
    public static void updateSearchHistory(String result){
 	   bottomDisplay.setTextArea(middleDisplay.getTextArea());
-	   System.out.println("bot text " + middleDisplay.getTextArea());
+	   System.out.println("bot text " + bottomDisplay.getTextArea());
 	   middleDisplay.setTextArea(topDisplay.getTextArea());
-	   System.out.println("mid text" + topDisplay.getTextArea()); 
+	   System.out.println("mid text" + middleDisplay.getTextArea()); 
 	   topDisplay.setTextArea(result);
    }
    

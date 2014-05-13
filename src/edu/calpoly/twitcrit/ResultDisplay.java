@@ -4,11 +4,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class ResultDisplay extends JPanel {
-	private static JTextArea textArea;
+	private JTextArea textArea;
    
 	public ResultDisplay(){
 		//setLayout
-      textArea = new JTextArea("movie results here");
+		textArea = new JTextArea();
 		setMaximumSize(new Dimension(400,100));
 		add(textArea);
 	}
