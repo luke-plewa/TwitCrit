@@ -12,7 +12,7 @@ public class ValueTester {
   private static HashMap<String, Double> rotten_scores = new HashMap<String, Double>();
   private static HashMap<String, Double> metacritic_scores = new HashMap<String, Double>();
   private static HashMap<String, Double> movie_scores = new HashMap<String, Double>();
-  private static final double TOLERANCE = 2.5;
+  private static final double TOLERANCE = 1.5;
 
   public static void setExistingScores() {
     rotten_scores.put(movieHashtags[0], 7.2);
@@ -29,27 +29,29 @@ public class ValueTester {
   }
 
   public static void checkMetaCriticScores() {
-    System.out. println("Comparing against metacritic scores...");
+    System.out. println("\nComparing against metacritic scores...\n");
     for (int i = 0; i < movieHashtags.length; i++) {
       String movie = movieHashtags[i];
       double score = Tester.searchForScore(movie);
-      if (TOLERANCE < Math.abs(score - metacritic_scores.get(movie))) {
+      if (TOLERANCE > Math.abs(score - metacritic_scores.get(movie))) {
         System.out.println(movie + " PASSED tests with score " + score);
       } else {
         System.out.println(movie + " FAILED tests with score " + score);
+        System.out.println("Compared to score: " + metacritic_scores.get(movie));
       }
     }
   }
 
   public static void checkRottenScores() {
-    System.out. println("Comparing against rotten tomatoes scores...");
+    System.out. println("\nComparing against rotten tomatoes scores...\n");
     for (int i = 0; i < movieHashtags.length; i++) {
       String movie = movieHashtags[i];
       double score = Tester.searchForScore(movie);
-      if (TOLERANCE < Math.abs(score - rotten_scores.get(movie))) {
+      if (TOLERANCE > Math.abs(score - rotten_scores.get(movie))) {
         System.out.println(movie + " PASSED tests with score " + score);
       } else {
         System.out.println(movie + " FAILED tests with score " + score);
+        System.out.println("Compared to score: " + rotten_scores.get(movie));
       }
     }
   }
