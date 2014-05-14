@@ -6,9 +6,14 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MainWindow extends JFrame {
-   private static ResultDisplay topDisplay;
-   private static ResultDisplay middleDisplay;
-   private static ResultDisplay bottomDisplay;
+	private static final long serialVersionUID = 1L;
+	private static ResultDisplay topDisplay;
+	private static ResultDisplay middleDisplay;
+	private static ResultDisplay bottomDisplay;
+   
+   public static ResultDisplay getTopDisplay() {
+      return topDisplay;
+   }
    
    public static void updateSearchHistory(String result){
 	   bottomDisplay.setTextArea(middleDisplay.getTextArea());
