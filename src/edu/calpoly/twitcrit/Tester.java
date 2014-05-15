@@ -174,12 +174,12 @@ public class Tester {
          movie_scores.put(hashtag, new Double(score / index));
          System.out.println("Movie hashtag: " + hashtag);
          int checkValidReturn = num_reviews.get(hashtag);
-         if(checkValidReturn > 0){
-	         System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
+         if(checkValidReturn > 0) {
+	         System.out.println("Score: " + String.format("%.2f", movie_scores.get(hashtag)) + " out of "
 	            + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
 
 	         String movieTag = "Movie hashtag: " + hashtag + "\n"
-	                           + "Score: " + movie_scores.get(hashtag) + " out of "
+	                           + "Score: " + String.format("%.2f", movie_scores.get(hashtag)) + " out of "
 	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
 
 	         //update the panels with the new results

@@ -8,7 +8,8 @@ public class TwitCritDriver {
             @Override
             public void run() {
             	new MainWindow();
-            }
+            	new ChartWindow();
+           	}
 		});
 	}
 }
