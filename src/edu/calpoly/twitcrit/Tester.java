@@ -19,7 +19,7 @@ public class Tester {
          {"great", "better", "well done", "excite"},
          {"love", "marvelous", "fabulous", "legit", "fresh"},
          {"awesome", "excellent", "amazing", "must see"},
-         {"best", "incredible", "Oscar"}	//removed "top", because it was including tweets with "stop"
+         {"best", "incredible", "Oscar"}  //removed "top", because it was including tweets with "stop"
     };
 
     /*private static HashMap<String, Double> movie_scores;
@@ -27,23 +27,23 @@ public class Tester {
     private static HashMap<String, Integer> keywords_seen;
 
     private Tester(){
-  	  movie_scores = new HashMap<String, Double>();
+     movie_scores = new HashMap<String, Double>();
       num_reviews = new HashMap<String, Integer>();
       keywords_seen = new HashMap<String, Integer>();
     }
 
     public static void displayScore(String hashtag){
-    	new Tester().printScore(hashtag);
+      new Tester().printScore(hashtag);
     }*/
 
     //use this if we go with predefining our statics, otherwise use the commented out
-   	//part that's above this for static factory instancing
+      //part that's above this for static factory instancing
     private static HashMap<String, Double> movie_scores = new HashMap<String, Double>();
     private static HashMap<String, Integer> num_reviews = new HashMap<String, Integer>();
     private static HashMap<String, Integer> keywords_seen = new HashMap<String, Integer>();
 
     public static String movieToHashtag(String movie){
-    	return "#CaptainAmerica";
+      return "#CaptainAmerica";
     }
 
    public static Query makeQuery(String keyword) {
@@ -62,7 +62,7 @@ public class Tester {
 
       for (String set[] : KEYWORDS) {
          for (String word : set) {
-            if (text.contains(word)) {
+            if (text.matches(".*\\b" + word + ".*\\b")) {
                score += index;
                count++;
 
@@ -175,34 +175,34 @@ public class Tester {
          System.out.println("Movie hashtag: " + hashtag);
          int checkValidReturn = num_reviews.get(hashtag);
          if(checkValidReturn > 0){
-	         System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
-	            + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
+            System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
+               + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
 
-	         String movieTag = "Movie hashtag: " + hashtag + "\n"
-	                           + "Score: " + movie_scores.get(hashtag) + " out of "
-	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
+            String movieTag = "Movie hashtag: " + hashtag + "\n"
+                              + "Score: " + movie_scores.get(hashtag) + " out of "
+                              + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
 
-	         //update the panels with the new results
-	         MainWindow.updateSearchHistory(movieTag);
+            //update the panels with the new results
+            MainWindow.updateSearchHistory(movieTag);
 
-	         //Prints out the keywords used.
-	         String mostSeen = null;
-	         Integer maxValue = 0;
-	         for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
-	            String keyword = entry.getKey();
-	            Integer value = entry.getValue();
+            //Prints out the keywords used.
+            String mostSeen = null;
+            Integer maxValue = 0;
+            for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
+               String keyword = entry.getKey();
+               Integer value = entry.getValue();
 
-	            System.out.println("Keyword: " + keyword + "	Count: " + value);
-	            if (value > maxValue) {
-	               maxValue = value;
-	               mostSeen = keyword;
-	            }
-	         }
-	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
-	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
+               System.out.println("Keyword: " + keyword + " Count: " + value);
+               if (value > maxValue) {
+                  maxValue = value;
+                  mostSeen = keyword;
+               }
+            }
+            System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
+            keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
          else {
-        	 MessageDisplayPane.displayMessage("There were no search results for this movie.");
+          MessageDisplayPane.displayMessage("There were no search results for this movie.");
          }
 
       }
