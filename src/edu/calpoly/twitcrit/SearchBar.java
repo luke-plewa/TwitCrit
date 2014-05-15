@@ -53,8 +53,24 @@ public class SearchBar extends JPanel implements FocusListener, ActionListener, 
 		else searchField.setText(currentSearchText);
 	}
 	
+	private String movieToHashtag(String name){
+		//make sure it's not already in hashtag form
+		if(name.charAt(0) == '#')
+			return name;
+		
+		StringBuilder ret = new StringBuilder("#");
+		String[] tokens = name.split(" "); //get rid of all spaces
+		//capitalize first letter of each word
+		for(int i = 0; i < tokens.length; i++){
+			char upper = Character.toUpperCase(tokens[i].charAt(0));
+			ret.append(upper + tokens[i].substring(1));
+		}
+		
+		return ret.toString();
+	}
+	
 	private void runSearch(){
-		String text = searchField.getText();
+		String text = movieToHashtag(searchField.getText());
 		Tester.printScore(text);
 	}
 	
