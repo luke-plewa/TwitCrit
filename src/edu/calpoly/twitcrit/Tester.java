@@ -203,7 +203,7 @@ public class Tester {
             }
 
 	         //update the panels with the new results
-	         MainWindow.updateSearchHistory(movieTag);
+	         MainWindow.updateSearchHistory(movieTag, max_favorited, max_retweeted);
 
 	         //Prints out the keywords used.
 	         String mostSeen = null;
