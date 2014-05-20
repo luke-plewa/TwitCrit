@@ -48,7 +48,7 @@ public class MainWindow extends JFrame {
 		//create the main frame and set details
 		this.setTitle("TwitCrit");
 		this.setLayout(new BoxLayout(this.getContentPane(),BoxLayout.PAGE_AXIS));
-		this.setPreferredSize(new Dimension(800,800));
+		this.setPreferredSize(new Dimension(600,600));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//panel to hold the search bar and search button
