@@ -42,6 +42,9 @@ public class Tester {
     private static HashMap<String, Integer> num_reviews = new HashMap<String, Integer>();
     private static HashMap<String, Integer> keywords_seen = new HashMap<String, Integer>();
 
+   private static Status max_retweeted = null;
+   private static Status max_favorited = null;
+
    public static Query makeQuery(String keyword) {
       Query query = new Query(keyword);
       query.setLang("en");
@@ -151,6 +154,7 @@ public class Tester {
          Twitter twitter = TwitterFactory.getSingleton();
          Query query = makeQuery(hashtag);
          QueryResult result = twitter.search(query);
+         int max_retweets = 0, max_favorites = 0;
 
          for (int i = 0; i < PAGES_TO_SEARCH; i++) {
             for (Status status : result.getTweets()) {
@@ -159,6 +163,15 @@ public class Tester {
                // System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
                if (new_score != 0) {
                   index++;
+               }
+
+               if (new_score != 0 && max_retweets < status.getRetweetCount()) {
+                 max_retweets = status.getRetweetCount();
+                 max_retweeted = status;
+               }
+               if (new_score != 0 && max_favorites < status.getFavoriteCount()) {
+                 max_favorites = status.getFavoriteCount();
+                 max_favorited = status;
                }
             }
             query = result.nextQuery();
@@ -182,8 +195,19 @@ public class Tester {
 	                           + "Score: " + String.format("%.2f", movie_scores.get(hashtag)) + " out of "
 	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
 
+            if (max_retweeted != null) {
+              System.out.println("Most retweeted tweet: @" + max_retweeted.getUser().getScreenName() +
+                ": " + max_retweeted.getText() +
+                " with: " + max_retweets + " retweets.");
+            }
+            if (max_favorited != null) {
+              System.out.println("Most favorited tweet: @" + max_favorited.getUser().getScreenName() +
+                ": " + max_favorited.getText() +
+                " with: " + max_favorites + " favorites.");
+            }
+
 	         //update the panels with the new results
-	         MainWindow.updateSearchHistory(movieTag);
+	         MainWindow.updateSearchHistory(movieTag, max_favorited, max_retweeted);
 
 	         //Prints out the keywords used.
 	         String mostSeen = null;
@@ -216,5 +240,13 @@ public class Tester {
          System.out.println("Please wait " + r.getSecondsUntilReset() + " seconds before searching again.");
          System.exit(0);
       }
+   }
+
+   public static Status getFavorited() {
+      return max_favorited;
+   }
+
+   public static Status getRetweeted() {
+      return max_retweeted;
    }
 }
