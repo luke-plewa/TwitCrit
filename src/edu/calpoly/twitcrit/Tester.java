@@ -49,6 +49,10 @@ public class Tester {
       return query;
    }
 
+   public static String[][] getKeywords() {
+      return KEYWORDS;
+   }
+
    /* given the text of a tweet, return the score */
    public static double scoreTweet(Status status) {
       double score = 0;
@@ -195,6 +199,10 @@ public class Tester {
 	            }
 	         }
 	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
+	         
+	         //Attempting to print a graph of the used words
+	         new ChartWindow(keywords_seen);
+	         
 	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
          else {

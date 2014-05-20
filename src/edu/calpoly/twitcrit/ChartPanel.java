@@ -14,22 +14,32 @@ import javax.swing.JPanel;
 
 public class ChartPanel extends JPanel {
   
-  private double[] values;
+  private Integer[] values;
   private String[] names;
   private String title;
+  private String[][] keywordList;
 
-  public ChartPanel(double[] v, String[] n, String t) {
+  /* Constructor to initialize contents of chart */
+  public ChartPanel(Integer[] I, String[] n, String t) {
     names = n;
-    values = v;
+    values = I;
     title = t;
+    
+    keywordList = Tester.getKeywords();
+    
   }
 
+  /* Draw contents of chart */
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
+    
     if (values == null || values.length == 0)
       return;
+      
     double minValue = 0;
     double maxValue = 0;
+    
+    //find the minimum and maximum values to scale to
     for (int i = 0; i < values.length; i++) {
       if (minValue > values[i])
         minValue = values[i];
@@ -42,11 +52,12 @@ public class ChartPanel extends JPanel {
     int clientHeight = d.height;
     int barWidth = clientWidth / values.length;
 
-    Font titleFont = new Font("SansSerif", Font.BOLD, 20);
+    Font titleFont = new Font("SansSerif", Font.BOLD, 20);	//change the title font
     FontMetrics titleFontMetrics = g.getFontMetrics(titleFont);
-    Font labelFont = new Font("SansSerif", Font.PLAIN, 10);
+    Font labelFont = new Font("SansSerif", Font.PLAIN, 12);	//change the label font
     FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
 
+	//Draw the title in the window
     int titleWidth = titleFontMetrics.stringWidth(title);
     int y = titleFontMetrics.getAscent();
     int x = (clientWidth - titleWidth) / 2;
@@ -55,8 +66,10 @@ public class ChartPanel extends JPanel {
 
     int top = titleFontMetrics.getHeight();
     int bottom = labelFontMetrics.getHeight();
+    
     if (maxValue == minValue)
       return;
+    
     double scale = (clientHeight - top - bottom) / (maxValue - minValue);
     y = clientHeight - labelFontMetrics.getDescent();
     g.setFont(labelFont);
@@ -79,6 +92,7 @@ public class ChartPanel extends JPanel {
       int labelWidth = labelFontMetrics.stringWidth(names[i]);
       x = i * barWidth + (barWidth - labelWidth) / 2;
       g.drawString(names[i], x, y);
+      g.drawString(Integer.toString(values[i]), x, valueY - 2);
     }
   }
 }
