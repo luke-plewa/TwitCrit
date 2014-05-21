@@ -42,9 +42,9 @@ public class Tester {
     private static HashMap<String, Integer> num_reviews = new HashMap<String, Integer>();
     private static HashMap<String, Integer> keywords_seen = new HashMap<String, Integer>();
 
-    public static String movieToHashtag(String movie){
+    /*public static String movieToHashtag(String movie){
       return "#CaptainAmerica";
-    }
+    }*/
 
    public static Query makeQuery(String keyword) {
       Query query = new Query(keyword);
