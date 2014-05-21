@@ -13,7 +13,7 @@ public class Tester {
          {"garbage", "miserable", "embarrassing", "painful"},
          {"suck", "crap", "poop", "awful", "rotten"},
          {"bad", "poor", "not good"},
-         {"boring", "unfunny"},
+         {"boring", "unfunny", "overrated"},
          {"okay", "decent", "not bad"},
          {"good", "alright", "enjoy"},
          {"great", "better", "well done", "excite"},
