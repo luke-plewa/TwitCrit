@@ -13,7 +13,7 @@ public class Tester {
          {"garbage", "miserable", "embarrassing", "painful"},
          {"suck", "crap", "poop", "awful", "rotten"},
          {"bad", "poor", "not good"},
-         {"boring", "unfunny"},
+         {"boring", "unfunny", "overrated"},
          {"okay", "decent", "not bad"},
          {"good", "alright", "enjoy"},
          {"great", "better", "well done", "excite"},
@@ -42,15 +42,19 @@ public class Tester {
     private static HashMap<String, Integer> num_reviews = new HashMap<String, Integer>();
     private static HashMap<String, Integer> keywords_seen = new HashMap<String, Integer>();
 
-    /*public static String movieToHashtag(String movie){
-      return "#CaptainAmerica";
-    }*/
+
+   private static Status max_retweeted = null;
+   private static Status max_favorited = null;
 
    public static Query makeQuery(String keyword) {
       Query query = new Query(keyword);
       query.setLang("en");
       query.count(TWEETS_PER_PAGE);
       return query;
+   }
+
+   public static String[][] getKeywords() {
+      return KEYWORDS;
    }
 
    /* given the text of a tweet, return the score */
@@ -151,6 +155,7 @@ public class Tester {
          Twitter twitter = TwitterFactory.getSingleton();
          Query query = makeQuery(hashtag);
          QueryResult result = twitter.search(query);
+         int max_retweets = 0, max_favorites = 0;
 
          for (int i = 0; i < PAGES_TO_SEARCH; i++) {
             for (Status status : result.getTweets()) {
@@ -159,6 +164,15 @@ public class Tester {
                // System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
                if (new_score != 0) {
                   index++;
+               }
+
+               if (new_score != 0 && max_retweets < status.getRetweetCount()) {
+                 max_retweets = status.getRetweetCount();
+                 max_retweeted = status;
+               }
+               if (new_score != 0 && max_favorites < status.getFavoriteCount()) {
+                 max_favorites = status.getFavoriteCount();
+                 max_favorited = status;
                }
             }
             query = result.nextQuery();
@@ -174,32 +188,48 @@ public class Tester {
          movie_scores.put(hashtag, new Double(score / index));
          System.out.println("Movie hashtag: " + hashtag);
          int checkValidReturn = num_reviews.get(hashtag);
-         if(checkValidReturn > 0){
-            System.out.println("Score: " + movie_scores.get(hashtag) + " out of "
-               + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
 
-            String movieTag = "Movie hashtag: " + hashtag + "\n"
-                              + "Score: " + movie_scores.get(hashtag) + " out of "
-                              + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
+         if(checkValidReturn > 0) {
+	         System.out.println("Score: " + String.format("%.2f", movie_scores.get(hashtag)) + " out of "
+	            + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
 
-            //update the panels with the new results
-            MainWindow.updateSearchHistory(movieTag);
+	         String movieTag = "Movie hashtag: " + hashtag + "\n"
+	                           + "Score: " + String.format("%.2f", movie_scores.get(hashtag)) + " out of "
+	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
 
-            //Prints out the keywords used.
-            String mostSeen = null;
-            Integer maxValue = 0;
-            for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
-               String keyword = entry.getKey();
-               Integer value = entry.getValue();
-
-               System.out.println("Keyword: " + keyword + " Count: " + value);
-               if (value > maxValue) {
-                  maxValue = value;
-                  mostSeen = keyword;
-               }
+            if (max_retweeted != null) {
+              System.out.println("Most retweeted tweet: @" + max_retweeted.getUser().getScreenName() +
+                ": " + max_retweeted.getText() +
+                " with: " + max_retweets + " retweets.");
             }
-            System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
-            keywords_seen.clear(); //clear the map so we don't just keep expanding it
+            if (max_favorited != null) {
+              System.out.println("Most favorited tweet: @" + max_favorited.getUser().getScreenName() +
+                ": " + max_favorited.getText() +
+                " with: " + max_favorites + " favorites.");
+            }
+
+	         //update the panels with the new results
+	         MainWindow.updateSearchHistory(movieTag, max_favorited, max_retweeted);
+
+	         //Prints out the keywords used.
+	         String mostSeen = null;
+	         Integer maxValue = 0;
+	         for (Map.Entry<String, Integer> entry : keywords_seen.entrySet()) {
+	            String keyword = entry.getKey();
+	            Integer value = entry.getValue();
+
+	            System.out.println("Keyword: " + keyword + "	Count: " + value);
+	            if (value > maxValue) {
+	               maxValue = value;
+	               mostSeen = keyword;
+	            }
+	         }
+	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
+	         
+	         //Attempting to print a graph of the used words
+	         new ChartWindow(keywords_seen);
+	         
+	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
          else {
           MessageDisplayPane.displayMessage("There were no search results for this movie.");
@@ -212,5 +242,13 @@ public class Tester {
          System.out.println("Please wait " + r.getSecondsUntilReset() + " seconds before searching again.");
          System.exit(0);
       }
+   }
+
+   public static Status getFavorited() {
+      return max_favorited;
+   }
+
+   public static Status getRetweeted() {
+      return max_retweeted;
    }
 }

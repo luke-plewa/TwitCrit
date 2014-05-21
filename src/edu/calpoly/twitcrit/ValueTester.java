@@ -7,7 +7,7 @@ public class ValueTester {
 
   public static String[] movieHashtags = {
     "#EndlessLove", "#CaptainAmericaTheWinterSoldier", "#DraftDay",
-    "#Noah", "#Rio2"
+    "#Noah", "#Rio2", "#Godzilla2014", "Neighbors"
   };
   private static HashMap<String, Double> rotten_scores = new HashMap<String, Double>();
   private static HashMap<String, Double> metacritic_scores = new HashMap<String, Double>();
@@ -20,12 +20,16 @@ public class ValueTester {
     rotten_scores.put(movieHashtags[2], 7.4);
     rotten_scores.put(movieHashtags[3], 5.8);
     rotten_scores.put(movieHashtags[4], 7.6);
+    rotten_scores.put(movieHashtags[5], 7.6);
+    rotten_scores.put(movieHashtags[6], 7.6);
 
     metacritic_scores.put(movieHashtags[0], 2.7);
     metacritic_scores.put(movieHashtags[1], 8.4);
     metacritic_scores.put(movieHashtags[2], 6.8);
     metacritic_scores.put(movieHashtags[3], 5.4);
     metacritic_scores.put(movieHashtags[4], 6.6);
+    metacritic_scores.put(movieHashtags[5], 7.4);
+    metacritic_scores.put(movieHashtags[6], 6.6);
   }
 
   public static void checkMetaCriticScores() {
