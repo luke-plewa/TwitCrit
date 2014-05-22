@@ -19,7 +19,7 @@ public class Tester {
          {"great", "better", "well done", "excite"},
          {"love", "marvelous", "fabulous", "legit", "fresh"},
          {"awesome", "excellent", "amazing", "must see"},
-         {"best", "incredible", "Oscar"}  //removed "top", because it was including tweets with "stop"
+         {"best", "incredible", "Oscar", "top"}  
     };
 
     /*private static HashMap<String, Double> movie_scores;
