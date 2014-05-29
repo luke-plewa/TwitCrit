@@ -19,7 +19,7 @@ public class Tester {
          {"great", "better", "well done", "excite"},
          {"love", "marvelous", "fabulous", "legit", "fresh"},
          {"awesome", "excellent", "amazing", "must see"},
-         {"best", "incredible", "Oscar", "top"}  
+         {"best", "incredible", "Oscar", "top"}
     };
 
     /*private static HashMap<String, Double> movie_scores;
@@ -194,8 +194,7 @@ public class Tester {
 	            + MAX_SCORE + ", based on " + checkValidReturn + " reviews.");
 
 	         String movieTag = "Movie hashtag: " + hashtag + "\n"
-	                           + "Score: " + String.format("%.2f", movie_scores.get(hashtag)) + " out of "
-	                           + MAX_SCORE + ", based on " + num_reviews.get(hashtag) + " reviews.";
+	                           + num_reviews.get(hashtag) + " reviews found.";
 
             if (max_retweeted != null) {
               System.out.println("Most retweeted tweet: @" + max_retweeted.getUser().getScreenName() +
@@ -209,7 +208,7 @@ public class Tester {
             }
 
 	         //update the panels with the new results
-	         MainWindow.updateSearchHistory(movieTag, max_favorited, max_retweeted);
+	         MainWindow.updateSearchHistory(movieTag, max_favorited, max_retweeted, movie_scores.get(hashtag));
 
 	         //Prints out the keywords used.
 	         String mostSeen = null;
@@ -225,10 +224,10 @@ public class Tester {
 	            }
 	         }
 	         System.out.println("Most used keyword: " + mostSeen + ", used " + maxValue + " times.\n");
-	         
+
 	         //Attempting to print a graph of the used words
 	         new ChartWindow(keywords_seen);
-	         
+
 	         keywords_seen.clear(); //clear the map so we don't just keep expanding it
          }
          else {

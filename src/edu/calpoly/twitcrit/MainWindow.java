@@ -11,22 +11,29 @@ public class MainWindow extends JFrame {
 	private static ResultDisplay topDisplay;
 	private static ResultDisplay middleDisplay;
 	private static ResultDisplay bottomDisplay;
+  private static int count = 0;
 
    public static ResultDisplay getTopDisplay() {
       return topDisplay;
    }
 
-   public static void updateSearchHistory(String result, Status favorited, Status retweeted){
-	  bottomDisplay.setTextArea(middleDisplay.getTextArea());
-	  bottomDisplay.setFavoriteArea(middleDisplay.getFavoriteArea());
-	  bottomDisplay.setRetweetArea(middleDisplay.getRetweetArea());
+   public static void updateSearchHistory(String result, Status favorited, Status retweeted, double score){
+	  if (count > 1) {
+      bottomDisplay.setTextArea(middleDisplay.getTextArea());
+	    bottomDisplay.setFavoriteArea(middleDisplay.getFavoriteArea());
+	    bottomDisplay.setRetweetArea(middleDisplay.getRetweetArea());
+      bottomDisplay.setScore(middleDisplay.getScore());
+    }
 
-
-	  middleDisplay.setTextArea(topDisplay.getTextArea());
-	  middleDisplay.setFavoriteArea(topDisplay.getFavoriteArea());
-	  middleDisplay.setRetweetArea(topDisplay.getRetweetArea());
+    if (count > 0) {
+	   middleDisplay.setTextArea(topDisplay.getTextArea());
+	   middleDisplay.setFavoriteArea(topDisplay.getFavoriteArea());
+	   middleDisplay.setRetweetArea(topDisplay.getRetweetArea());
+      middleDisplay.setScore(topDisplay.getScore());
+    }
 
 	  topDisplay.setTextArea(result);
+    topDisplay.setScore(score);
 
    	if (retweeted != null) {
    		topDisplay.setRetweetArea("Most retweeted tweet: @" +
@@ -42,6 +49,8 @@ public class MainWindow extends JFrame {
    	} else {
    		topDisplay.setFavoriteArea("No favorited tweets :(");
    	}
+
+    count++;
    }
 
 	public MainWindow() {
